@@ -12,9 +12,10 @@ storage_lst = [
     {'id': 5, 'title': 'Склад_Мытищи', 'address': 'Колпакова', 'open': True}
     ]
 main_menu = [
+    {'title': 'На главную', 'url_name': 'home'},
     {'title': 'О сайте', 'url_name': 'about'},
     {'title': 'Обратная связь', 'url_name': 'contact'},
-    {'title': 'Войти / Зарегистрироваться', 'url_name': 'log_in'}
+    {'title': 'Войти', 'url_name': 'log_in'}
     ]
 
 def index(request):
@@ -36,7 +37,7 @@ def show_store(request, store_id):
 
 
 def about(request):
-    data = {"title": "информация о сайте"}
+    data = {"title": "информация о сайте", 'menu': main_menu}
     return render(request, 'store/about.html', context=data)
 
 

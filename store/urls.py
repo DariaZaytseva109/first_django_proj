@@ -4,7 +4,7 @@ from store.views import index, catalog, good_id, archive, about, show_store, con
 
 urlpatterns = [
     path('main/', index, name='home'),
-    path('main/<int:store_id>/', show_store, name='show_store'),
+    path('main/<slug:store_slug>/', show_store, name='show_store'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('log_in/', log_in, name='log_in'),

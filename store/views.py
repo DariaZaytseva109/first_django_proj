@@ -1,16 +1,10 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseServerError
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 
+from store.models import Store
 
-# Create your views here.
-storage_lst = [
-    {'id': 1, 'title': 'Склад_Москва', 'address': 'Мкад 2 км', 'open': True},
-    {'id': 2, 'title': 'Склад_Химки', 'address': 'Мега Химки', 'open': True},
-    {'id': 3, 'title': 'Склад_Красногорск', 'address': 'Павшино', 'open': True},
-    {'id': 4, 'title': 'Склад_Одинцово', 'address': 'Можайское шоссе', 'open': False},
-    {'id': 5, 'title': 'Склад_Мытищи', 'address': 'Колпакова', 'open': True}
-    ]
+
 main_menu = [
     {'title': 'На главную', 'url_name': 'home'},
     {'title': 'О сайте', 'url_name': 'about'},
@@ -18,9 +12,11 @@ main_menu = [
     {'title': 'Войти', 'url_name': 'log_in'}
     ]
 
+
 def index(request):
-    title = "Список складов"
-    data = {'storages': storage_lst, 'title': title, 'menu': main_menu}
+    storage_lst = Store.objects.all()
+    print(storage_lst)
+    data = {'page_title': "Список складов", 'storages': storage_lst, 'menu': main_menu}
     return render(request, 'store/index.html', context=data)
 
 
@@ -32,12 +28,14 @@ def log_in(request):
     return HttpResponse('Регистрация')
 
 
-def show_store(request, store_id):
-    return HttpResponse(f'Склад {store_id}')
+def show_store(request, store_slug):
+    store = get_object_or_404(Store, store_slug=store_slug)
+    data = {'page_title': store.title, 'store': store, 'menu': main_menu}
+    return render(request, 'store/store.html', context=data)
 
 
 def about(request):
-    data = {"title": "информация о сайте", 'menu': main_menu}
+    data = {"page_title": "информация о сайте", 'menu': main_menu}
     return render(request, 'store/about.html', context=data)
 
 

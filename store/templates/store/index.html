@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная</title>
-    {% for m in menu %}
-    <a href="{% url m.url_name %}"> {{ m.title }} {%if not forloop.last %}  |  {% endif %} </a>
-    {% endfor %}
+{% extends 'base.html' %}
+{% block content %}
     <h1> {{ title }}</h1>
     <ul>{% for s in storages %}
         {% if s.open == True %}
-        <li> <h3> {{ s.title }} </h3>
+        <li> <a href="{% url 'show_store' s.store_slug %}"> <h3> {{ s.title }} </h3> </a>
         <p> Адрес: {{ s.address }} </p>
-        <p> <a href="{% url 'show_store' s.id %}"> Поставить товар  </a> </p>
-        <p> <a href="{% url 'show_store' s.id %}"> Забрать товар </a> </p>
         <hr>
     </li> {% endif %}
     {% endfor %}
     </ul>
-</head>
-<body>
-
-</body>
-</html>
+{% endblock %}

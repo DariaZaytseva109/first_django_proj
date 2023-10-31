@@ -1,13 +1,16 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Главная</title>
+    <title> {{ page_title }} </title>
+    <link type="text/css" href="{% static 'store/css/styles.css' %}" rel="stylesheet" />
     {% for m in menu %}
     <a href="{% url m.url_name %}"> {{ m.title }} {%if not forloop.last %}  |  {% endif %} </a>
     {% endfor %}
 
-    <title>Title</title>
+    <title> {{ page_title }} </title>
 </head>
 
 <body>
